@@ -1,0 +1,75 @@
+<div class="row" *ngIf="member">
+    <div class="col-3">
+        <h1>Your Profile</h1>
+    </div>
+    <div class="col-8">
+        <div class="alert alert-info" *ngIf="editForm.dirty">
+            <strong>Information:</strong> You have made changes. Any unsaved changes will be lost
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <img src="{{member.photoUrl || './assets/user.png'}}" alt="" class="card-img-top img-thumbnail"
+                alt="{{member.knownAs}}">
+            <div class="card-body">
+                <div>
+                    <strong>Location</strong>
+                    <p>{{member.city}},{{member.country}}</p>
+                </div>
+                <div>
+                    <strong>Age</strong>
+                    <p>{{member.age}}</p>
+                </div>
+                <div>
+                    <strong>Last Active</strong>
+                    <p>{{member.lastActive}}</p>
+                </div>
+                <div>
+                    <strong>Member Since</strong>
+                    <p>{{member.created}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button [disabled]="!editForm.dirty" form="editForm" class="btn btn-success btn-block">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-9 member-tabset">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab"
+                    aria-controls="about" aria-selected="true">About {{member.knownAs}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="editPhoto-tab" data-toggle="tab" href="#editPhoto" role="tab"
+                    aria-controls="editPhoto" aria-selected="false">Edit-Photo</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+                <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+                    <h4>Description</h4>
+                    <textarea class="form-control" [(ngModel)]="member.introduction" name="introduction" rows="6"></textarea>
+                    <h4 class="mt-2">Looking For</h4>
+                    <textarea class="form-control" [(ngModel)]="member.lookingFor" name="lookingFor" rows="6"></textarea>
+                    <h4 class="mt-2">Interests</h4>
+                    <textarea class="form-control" [(ngModel)]="member.interests" name="interests" rows="6"></textarea>
+                    <h4 class="mt-2">Location Details:</h4>
+                    <div class="form-inline">
+                        <label for="city">City:</label>
+                        <input class="form-control" [(ngModel)]="member.city" type="text" name="city" class="form-control mx-2">
+                        <label for="city">Country:</label>
+                        <input class="form-control" [(ngModel)]="member.country" type="text" name="country" class="form-control mx-2">
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="editPhoto" role="tabpanel" aria-labelledby="editPhoto-tab">
+                <h4>Edit-Photo</h4>
+                <p>Editing Photo is coming soon . . .</p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
