@@ -17,32 +17,32 @@ export class AccountService {
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'account/login', model).pipe(
-      map((res:User)=>{
+      map((res: User) => {
         const user = res;
-        if(user){
-          localStorage.setItem('user',JSON.stringify(user));
-          this.currentUserSource.next(user);
+        if (user) {
+          this.setCurrentUser(user);
         }
       })
     );
   }
 
-  register(model:any){
-    return this.http.post(this.baseUrl+'Account/register',model).pipe(
-      map((user:User) => {
-        if(user){
-          localStorage.setItem('user',JSON.stringify(user));
-          this.currentUserSource.next(user);
+  register(model: any) {
+    return this.http.post(this.baseUrl + 'Account/register', model).pipe(
+      map((user: User) => {
+        if (user) {
+          this.setCurrentUser(user);
         }
       })
     )
   }
 
-  setCurrentUser(user:User){
+  setCurrentUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
+    
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
   }
